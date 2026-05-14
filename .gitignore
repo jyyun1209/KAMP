@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+
+# IDE
+.vscode/
+
+# ML model artifacts
+*.keras
+*.h5
+*.pkl
+*.joblib
+*.pth
+*.ckpt
+*.onnx
+
+# Data
+dataset/
