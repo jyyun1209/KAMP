@@ -8,6 +8,7 @@ tags: [KAMP, ML, Classification, SensorData, FaultDetection]
 > - [[Terminology#러닝 커브]] — Learning Curve 용어 정의 (이수페타시스 용어집)
 
 가이드북: [[Guidebook_FordEngine.pdf]]
+구현 코드: https://github.com/jyyun1209/KAMP
 
 # 개요
 
@@ -173,6 +174,26 @@ StandardScaler vs. **RobustScaler**(Outlier에 강건함)
 : Windowing을 적용했을 때, 성능 감소
 
 → 시계열 특성이 없는데, 계속해서 시계열 특성에 대해 학습하는 것이 오히려 도움이 안됨.
+
+# 모델 성능 요약
+
+| 모델                                      | AUC       | 비고                |
+| --------------------------------------- | --------- | ----------------- |
+| Logistic Regression                     | 0.476     | 베이스라인, 선형 한계      |
+| Logistic Regression + Pearson + Poly2   | 0.891     | 비선형 변환 효과         |
+| Logistic Regression + Kendall + Poly2   | 0.873     |                   |
+| Logistic Regression + Spearman + Poly2  | 0.873     |                   |
+| Logistic Regression + L1 Regularization | 0.903     | 56% 가중치 억제        |
+| XGBoost                                 | 0.852     | 파인튜닝 없음           |
+| RNN (LSTM)                              | 0.785     | 시계열 입력            |
+| RNN (LSTM) + Windowing (W=1)            | 0.826     | 사실상 MLP           |
+| **CNN**                                 | **0.970** | **최고 성능**         |
+
+**핵심 인사이트**
+- CNN > XGBoost > LR(L1+Poly2) > LSTM > LR 순
+- 단순 모델(LR)도 Feature Engineering·정규화로 0.476 → 0.903까지 개선 가능
+- 시계열 형태 입력이 항상 LSTM에 유리한 것은 아님 (Window=1일 때 오히려 최고 성능)
+- CNN의 우수성은 파인튜닝되지 않은 XGBoost와의 비교라는 점 유의
 
 # 결론
 
