@@ -1,7 +1,7 @@
 import numpy as np
 from scipy.io.arff import loadarff
 
-file_path = './dataset/'
+file_path = './dataset/FordEngine/'
 train_fn = "FordA_TRAIN.arff"
 test_fn = "FordA_TEST.arff"
 
